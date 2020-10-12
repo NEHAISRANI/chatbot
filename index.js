@@ -8,17 +8,19 @@ const bot = new TelegramBot(token, {polling: true});
         "keyboard": [["Sample text", "Second sample"],   ["Keyboard"], ["I'm robot"]]
         }
     });
-    bot.on('message', (msg) => {
-      var Hi = "hi";
-      if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
-        bot.sendMessage(msg.from.id, "Hello  " + msg.from.first_name);
-        bot.sendMessage(msg.chat.id,"<b>bold</b> \n <i>italic</i> \n <em>italic with em</em> \n <a href=\"http://www.example.com/\">inline URL</a> \n <code>inline fixed-width code</code> \n <pre>pre-formatted fixed-width code block</pre>" ,{parse_mode : "HTML"});
-      }
-          
-      var bye = "bye";
+
+  bot.on('message', (msg) => {
+    var Hi = "hi";
+    if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
+      bot.sendMessage(msg.from.id, "Hello  " + msg.from.first_name);
+      bot.sendMessage(msg.chat.id,"<b>bold</b> \n <i>italic</i> \n <em>italic with em</em> \n <a href=\"http://www.example.com/\">inline URL</a> \n <code>inline fixed-width code</code> \n <pre>pre-formatted fixed-width code block</pre>" ,{parse_mode : "HTML"});
+    }
+
+    var bye = "bye";
       if (msg.text.toString().toLowerCase().includes(bye)) {
         bot.sendMessage(msg.chat.id, "Hope to see you around again , Bye");
     } 
+
     var robot = "I'm robot";
     if (msg.text.indexOf(robot) === 0) {
       bot.sendMessage(msg.chat.id, "Yes I'm robot but not in that way!");
@@ -28,7 +30,7 @@ const bot = new TelegramBot(token, {polling: true});
     bot.sendPhoto(msg.chat.id,"https://tinyjpg.com/images/social/website.jpg",{caption : "Here we go ! \nThis is just a caption "} );
   });
   
-    bot.onText(/\/sendaudio/,(msg)=>{
+  bot.onText(/\/sendaudio/,(msg)=>{
     bot.sendAudio(msg.chat.id,"https://gaana.com/song/clash-57")
   }) 
 
