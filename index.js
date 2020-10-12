@@ -25,6 +25,12 @@ const bot = new TelegramBot(token, {polling: true});
     if (msg.text.indexOf(robot) === 0) {
       bot.sendMessage(msg.chat.id, "Yes I'm robot but not in that way!");
     }
+
+    var location = "location";
+    if (msg.text.indexOf(location) === 0) {
+      bot.sendLocation(msg.chat.id,44.97108, -104.27719);
+      bot.sendMessage(msg.chat.id, "Here is the point");
+    }
   
   bot.onText(/\/sendpic/, (msg) => {
     bot.sendPhoto(msg.chat.id,"https://tinyjpg.com/images/social/website.jpg",{caption : "Here we go ! \nThis is just a caption "} );
@@ -34,13 +40,7 @@ const bot = new TelegramBot(token, {polling: true});
     bot.sendAudio(msg.chat.id,"https://gaana.com/song/clash-57")
   }) 
 
-  bot.on('message', (msg) => {
-    var location = "location";
-    if (msg.text.indexOf(location) === 0) {
-      bot.sendLocation(msg.chat.id,44.97108, -104.27719);
-      bot.sendMessage(msg.chat.id, "Here is the point");
-    }
-  });
+  
 
   bot.onText(/\/calculate/, (msg) => {
     var text_msg= msg.text
