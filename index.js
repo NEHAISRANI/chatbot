@@ -33,23 +33,6 @@ bot.onText(/\/location/, (msg) => {
 });
 
 
-bot.onText(/\/calculate/, (msg) => {
-  var text_msg = msg.text
-  var operation = text_msg.split("calculate ")[1]
-  var result = eval(operation);
-  var final_result = `${operation}=${result}`
-  let operator = {
-    "operator": final_result
-  };
-  bot.sendMessage(msg.chat.id, final_result) 
-  var new1 = (operator["operator"])
-  let data = fs.readFileSync('operations.json')
-  data = data.toString();
-  let Data = JSON.parse(data)
-  Data.push(new1)
-  fs.writeFileSync("operations.json", JSON.stringify(Data, null, 2))
-});
-
 
 bot.onText(/\/sendpic/, (msg) => {
   bot.sendPhoto(msg.chat.id, "https://tinyjpg.com/images/social/website.jpg", {
@@ -57,16 +40,43 @@ bot.onText(/\/sendpic/, (msg) => {
   });
 });
 
+var userdict={}
+// operationArray=[]
+
+bot.onText(/\/calculate/, (msg) => {
+  var chat_id=msg.chat.id
+  var text_msg = msg.text
+  var operation = text_msg.split("calculate ")[1]
+  var result = eval(operation); 
+  var final_result = `${operation}=${result}`
+  if(userdict.hasOwnProperty(chat_id)){
+    for (i in userdict){
+        if(i==chat_id){
+        operationArray.push(final_result)
+        userdict[chat_id]=operationArray
+        return(userdict)
+      }
+    }
+  }
+  else{    
+    operationArray=[]
+    operationArray.push(final_result)
+    userdict[chat_id]=operationArray
+  }
+});
+
+
+
 
 bot.onText(/\/history/, (msg) => {
-  // console.log(msg)
   if (msg.chat.id===1317762373) {
   let data = fs.readFileSync('operations.json')
   data = data.toString();
   let Data = JSON.parse(data)
   {Data.map((a) => bot.sendMessage(msg.chat.id,a))}
   }
-  else{
+  else{ 
     bot.sendMessage(msg.chat.id,"another user will not get history")
   }
 });
+
